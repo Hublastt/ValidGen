@@ -6,15 +6,13 @@ import (
 	"time"
 
 	"math/rand"
-
-	utils "github.com/Hublastt/ValidGen/cmd/utils/cpf"
 )
 
 var (
-	errInvalidLen    = errors.New("cpf must contain exactly 11 digits")
-	errAllSameDigits = errors.New("invalid CPF: all digits are the same")
-	errInvalidCPF    = errors.New("invalid CPF, please try again")
-	errValidCpf      = errors.New("failed validation")
+	ErrInvalidLen    = errors.New("CPF must contain exactly 11 digits")
+	ErrAllSameDigits = errors.New("invalid CPF: all digits are the same")
+	ErrInvalidCPF    = errors.New("invalid CPF, please try again")
+	ErrValidCPF      = errors.New("failed validation")
 )
 
 type CPFFunctions struct{}
@@ -24,42 +22,42 @@ type ValidGenStruct struct {
 }
 
 func (CPFFunctions) IsValid(cpf string) error {
-	cpfDigits := utils.SanitizeCPF(cpf)
+	cpfDigits := SanitizeCPF(cpf)
 
 	if len(cpfDigits) != 11 {
-		return errInvalidLen
+		return ErrInvalidLen
 	}
 
-	if utils.AllDigitsAreEqual(cpfDigits) {
-		return errAllSameDigits
+	if AllDigitsAreEqual(cpfDigits) {
+		return ErrAllSameDigits
 	}
 
-	if !utils.ValidateVerificationDigits(cpfDigits) {
-		return errInvalidCPF
+	if !ValidateVerificationDigits(cpfDigits) {
+		return ErrInvalidCPF
 	}
 
 	return nil
 }
 
-func (CPFFunctions) GerarCPF() (string, error) {
-	fonte := rand.New(rand.NewSource(time.Now().UnixNano()))
-	numeros := make([]int, 9)
+func (CPFFunctions) GenerateCPF() (string, error) {
+	source := rand.New(rand.NewSource(time.Now().UnixNano()))
+	numbers := make([]int, 9)
 
-	for i := 0; i < 9; i++ {
-		numeros[i] = fonte.Intn(10)
+	for i := range 9 {
+		numbers[i] = source.Intn(10)
 	}
 
-	numeros = append(numeros, utils.CalcularDigitoVerificador(numeros, 10))
-	numeros = append(numeros, utils.CalcularDigitoVerificador(numeros, 11))
+	numbers = append(numbers, CalculateCheckDigit(numbers, 10))
+	numbers = append(numbers, CalculateCheckDigit(numbers, 11))
 
 	cpf := ""
 
-	for _, num := range numeros {
+	for _, num := range numbers {
 		cpf += fmt.Sprintf("%d", num)
 	}
 
 	if err := (CPFFunctions{}).IsValid(cpf); err != nil {
-		return "", errValidCpf
+		return "", ErrValidCPF
 	}
 
 	return cpf, nil
