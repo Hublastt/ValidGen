@@ -3,9 +3,13 @@ package cpf
 import (
 	"errors"
 	"fmt"
+	"regexp"
 	"time"
 
 	"math/rand"
+
+	"github.com/Hublastt/ValidGen/cmd/cpf/generate"
+	"github.com/Hublastt/ValidGen/cmd/cpf/validade"
 )
 
 var (
@@ -21,18 +25,18 @@ type ValidGenStruct struct {
 	CPF CPFFunctions
 }
 
-func (CPFFunctions) IsValid(cpf string) error {
-	cpfDigits := SanitizeCPF(cpf)
+func (CPFFunctions) ValidateCPF(cpf string) error {
+	cpfDigits := validade.SanitizeCPF(cpf)
 
 	if len(cpfDigits) != 11 {
 		return ErrInvalidLen
 	}
 
-	if AllDigitsAreEqual(cpfDigits) {
+	if validade.AllDigitsAreEqual(cpfDigits) {
 		return ErrAllSameDigits
 	}
 
-	if !ValidateVerificationDigits(cpfDigits) {
+	if !validade.ValidateVerificationDigits(cpfDigits) {
 		return ErrInvalidCPF
 	}
 
@@ -47,8 +51,8 @@ func (CPFFunctions) GenerateCPF() (string, error) {
 		numbers[i] = source.Intn(10)
 	}
 
-	numbers = append(numbers, CalculateCheckDigit(numbers, 10))
-	numbers = append(numbers, CalculateCheckDigit(numbers, 11))
+	numbers = append(numbers, generate.CalculateCheckDigit(numbers, 10))
+	numbers = append(numbers, generate.CalculateCheckDigit(numbers, 11))
 
 	cpf := ""
 
@@ -56,9 +60,30 @@ func (CPFFunctions) GenerateCPF() (string, error) {
 		cpf += fmt.Sprintf("%d", num)
 	}
 
-	if err := (CPFFunctions{}).IsValid(cpf); err != nil {
-		return "", ErrValidCPF
+	if err := (CPFFunctions{}).ValidateCPF(cpf); err != nil {
+		return "", err
 	}
+
+	return cpf, nil
+}
+
+func (CPFFunctions) FormatCPF(cpf string) (string, error) {
+
+	if err := (CPFFunctions{}).ValidateCPF(cpf); err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("%s.%s.%s-%s", cpf[:3], cpf[3:6], cpf[6:9], cpf[9:]), nil
+}
+
+func (CPFFunctions) UnformatCPF(cpf string) (string, error) {
+
+	if err := (CPFFunctions{}).ValidateCPF(cpf); err != nil {
+		return "", err
+	}
+
+	re := regexp.MustCompile(`\D`)
+	cpf = re.ReplaceAllString(cpf, "")
 
 	return cpf, nil
 }
