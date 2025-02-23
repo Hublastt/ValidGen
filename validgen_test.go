@@ -5,7 +5,7 @@ import (
 )
 
 func TestGenerateCpf(t *testing.T) {
-	cpf, err := GenerateCpf()
+	cpf, err := GenerateCPF()
 	if err != nil {
 		t.Errorf("GenerateCpf() error = %v", err)
 	}
@@ -18,11 +18,11 @@ func TestValidateCpf(t *testing.T) {
 	validCpf := "12345678909"
 	invalidCpf := "12345678900"
 
-	if err := ValidateCpf(validCpf); err != nil {
+	if err := ValidateCPF(validCpf); err != nil {
 		t.Errorf("ValidateCpf(%v) error = %v; want nil", validCpf, err)
 	}
 
-	if err := ValidateCpf(invalidCpf); err == nil {
+	if err := ValidateCPF(invalidCpf); err == nil {
 		t.Errorf("ValidateCpf(%v) error = nil; want error", invalidCpf)
 	}
 }
