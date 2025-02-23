@@ -1,0 +1,33 @@
+name: Go
+on:
+  pull_request:
+    branches: [ "main" ]
+    types: [opened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.23.x'
+      - name: Install dependencies
+        run: go get .
+      - name: Build
+        run: go build -v ./...
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.23.x'
+      - name: Install dependencies
+        run: go get .
+      - name: Test with the Go CLI
+        run: go test ./...
