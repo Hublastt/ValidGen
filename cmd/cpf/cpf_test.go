@@ -12,7 +12,7 @@ func TestIsValid(t *testing.T) {
 	}{
 		{"Valid CPF", "12345678909", nil},
 		{"Invalid length", "1234567890", ErrInvalidLen},
-		{"All same digits", "11111111111", ErrAllSameDigits},
+		{"All same digits", "11121111111", ErrAllSameDigits},
 		{"Invalid CPF", "12345678900", ErrInvalidCPF},
 	}
 
