@@ -1,6 +1,7 @@
 package cpf
 
 import (
+	"regexp"
 	"testing"
 )
 
@@ -79,6 +80,22 @@ func TestFormatCPF(t *testing.T) {
 			}
 			if result != test.expected {
 				t.Errorf("FormatCPF(%q) = %q; want %q", test.input, result, test.expected)
+			}
+		})
+	}
+}
+func TestFormatGeneratedCPF(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		t.Run("Format Generated CPF", func(t *testing.T) {
+			formattedCPF, err := (CPFFunctions{}).FormatGeneratedCPF()
+			if err != nil {
+				t.Errorf("FormatGeneratedCPF() error = %v", err)
+			}
+			if err := (CPFFunctions{}).ValidateCPF(formattedCPF); err != nil {
+				t.Errorf("Formatted generated CPF is invalid: %v", err)
+			}
+			if matched, _ := regexp.MatchString(`^\d{3}\.\d{3}\.\d{3}-\d{2}$`, formattedCPF); !matched {
+				t.Errorf("Formatted generated CPF does not match expected format: %s", formattedCPF)
 			}
 		})
 	}
