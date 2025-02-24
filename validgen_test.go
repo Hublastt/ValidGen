@@ -26,3 +26,16 @@ func TestValidateCpf(t *testing.T) {
 		t.Errorf("ValidateCpf(%v) error = nil; want error", invalidCpf)
 	}
 }
+
+func TestFormatGeneratedCpf(t *testing.T) {
+	formattedCpf, err := FormatGeneratedCPF()
+	if err != nil {
+		t.Errorf("FormatGeneratedCpf() error = %v", err)
+	}
+	if len(formattedCpf) != 14 {
+		t.Errorf("FormatGeneratedCpf() = %v; want length 14", formattedCpf)
+	}
+	if formattedCpf[3] != '.' || formattedCpf[7] != '.' || formattedCpf[11] != '-' {
+		t.Errorf("FormatGeneratedCpf() = %v; want format XXX.XXX.XXX-XX", formattedCpf)
+	}
+}
