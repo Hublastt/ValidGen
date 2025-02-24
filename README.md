@@ -40,17 +40,18 @@ To validate a CPF number:
 package main
 
 import (
-    "fmt"
-    "github.com/Hublastt/ValidGen/validgen"
+	"fmt"
+	validgen "github.com/Hublastt/ValidGen"
 )
 
 func main() {
-    err := validgen.ValidateCPF("12345678909")
-    if err != nil {
-        fmt.Println("Invalid CPF:", err)
-    } else {
-        fmt.Println("CPF is valid")
-    }
+	cpf := "123.456.789-09" // The CPF does not need to be formatted to be validated
+
+	if err := validgen.ValidateCPF(cpf); err != nil {
+		fmt.Println("Invalid CPF:", err)
+	} else {
+		fmt.Println("Valid CPF")
+	}
 }
 ```
 </details>
@@ -65,7 +66,7 @@ package main
 
 import (
     "fmt"
-    "github.com/Hublastt/ValidGen/validgen"
+    validgen "github.com/Hublastt/ValidGen"
 )
 
 func main() {
@@ -77,54 +78,12 @@ func main() {
     }
 }
 ```
-</details>
 
-<details>
-<summary>Format CPF</summary>
-
-To format a CPF number:
-
-```go
-package main
-
-import (
-    "fmt"
-    "github.com/Hublastt/ValidGen/validgen"
-)
-
-func main() {
-    formattedCPF, err := validgen.FormatCPF("12345678909")
-    if err != nil {
-        fmt.Println("Error formatting CPF:", err)
-    } else {
-        fmt.Println("Formatted CPF:", formattedCPF)
-    }
-}
+Output:
 ```
-</details>
-
-<details>
-<summary>Unformat CPF</summary>
-
-To unformat a CPF number:
-
-```go
-package main
-
-import (
-    "fmt"
-    "github.com/Hublastt/ValidGen/validgen"
-)
-
-func main() {
-    unformattedCPF, err := validgen.UnformatCPF("123.456.789-09")
-    if err != nil {
-        fmt.Println("Error unformatting CPF:", err)
-    } else {
-        fmt.Println("Unformatted CPF:", unformattedCPF)
-    }
-}
+Generated CPF: 12345678909
 ```
+
 </details>
 
 <details>
@@ -137,19 +96,94 @@ package main
 
 import (
     "fmt"
-    "github.com/Hublastt/ValidGen/validgen"
+    validgen "github.com/Hublastt/ValidGen"
 )
 
 func main() {
-    formattedGeneratedCPF, err := validgen.FormatGeneratedCPF()
+    cpf, err := validgen.FormatGeneratedCPF()
+
     if err != nil {
-        fmt.Println("Error formatting generated CPF:", err)
+        fmt.Println("Error generating CPF:", err)
     } else {
-        fmt.Println("Formatted Generated CPF:", formattedGeneratedCPF)
+        fmt.Println("Generated CPF:", cpf)
     }
 }
 ```
+
+Output:
+
+```
+Generated CPF: 123.456.789-09
+```
+
 </details>
+
+<details>
+<summary>Format CPF</summary>
+
+To format a CPF number:
+
+```go
+package main
+
+import (
+    "fmt"
+    validgen "github.com/Hublastt/ValidGen"
+)
+
+func main() {
+
+    formattedCPF, err := validgen.FormatCPF("12345678909")
+
+    if err != nil {
+        fmt.Println("Error formatting CPF:", err)
+    } else {
+        fmt.Println("Formatted CPF:", formattedCPF)
+    }
+}
+```
+
+Output:
+
+```
+Formatted CPF: 123.456.789-09
+```
+
+</details>
+
+<details>
+<summary>Unformat CPF</summary>
+
+To unformat a CPF number:
+
+```go
+package main
+
+import (
+    "fmt"
+    validgen "github.com/Hublastt/ValidGen"
+)
+
+func main() {
+    unformattedCPF, err := validgen.UnformatCPF("123.456.789-09")
+
+    if err != nil {
+        fmt.Println("Error removing formatting:", err)
+    } else {
+        fmt.Println("Unformatted CPF:", unformattedCPF)
+    }
+}
+```
+
+Output:
+
+```
+Unformatted CPF: 12345678909
+```
+
+</details>
+
+
 
 ## Contributing
 
