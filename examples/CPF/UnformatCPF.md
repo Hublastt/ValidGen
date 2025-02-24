@@ -19,7 +19,7 @@ package main
 
 import (
     "fmt"
-    "github.com/yourusername/validgen"
+    validgen "github.com/Hublastt/ValidGen"
 )
 
 func main() {
@@ -31,4 +31,9 @@ func main() {
         fmt.Println("Unformatted CPF:", unformattedCPF)
     }
 }
+```
+
+Output:
+```
+Unformatted CPF: 12345678909
 ```
