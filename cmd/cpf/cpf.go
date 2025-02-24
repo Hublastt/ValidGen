@@ -87,3 +87,13 @@ func (CPFFunctions) UnformatCPF(cpf string) (string, error) {
 
 	return cpf, nil
 }
+
+func (CPFFunctions) FormatGenerateCPF() (string, error) {
+	cpf, err := (CPFFunctions{}).GenerateCPF()
+
+	if err != nil {
+		return "", err
+	}
+
+	return (CPFFunctions{}).FormatCPF(cpf)
+}

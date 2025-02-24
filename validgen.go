@@ -36,3 +36,11 @@ UnformatCpf - Unformat cpf
 func UnformatCPF(cpfString string) (string, error) {
 	return cpf.CPFFunctions{}.UnformatCPF(cpfString)
 }
+
+/*
+FormatGenerateCpf - Format generate cpf
+  - @return {string, error} - cpf, error
+*/
+func FormatGenerateCPF() (string, error) {
+	return cpf.CPFFunctions{}.FormatGenerateCPF()
+}
