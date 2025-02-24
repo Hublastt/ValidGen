@@ -3,7 +3,6 @@ sidebar_position: 1
 ---
 # ValidateCPF
 
-
 Validates whether a given CPF is valid.
 
 Parameters:
@@ -18,7 +17,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Hublastt/ValidGen/validgen"
+	validgen "github.com/Hublastt/ValidGen"
 )
 
 func main() {
@@ -29,7 +28,10 @@ func main() {
 	} else {
 		fmt.Println("Valid CPF")
 	}
-
 }
 ```
 
+Output:
+```
+Invalid CPF: <error message>
+```
