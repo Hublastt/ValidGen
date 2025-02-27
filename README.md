@@ -24,7 +24,7 @@ For more details and usage examples, check out the **Valigen** repository.
 To install the ValidGen package, use the following command:
 
 ```sh
-go get github.com/Hublastt/ValidGen
+go get github.com/HublastX/ValidGen
 ```
 
 ## Usage
