@@ -34,7 +34,7 @@ Below are examples of how to use the various functions provided by the ValidGen 
 <details>
 <summary>Validate CPF</summary>
 
-To validate a CPF number:
+To validate a CPF number :
 
 ```go
 package main
