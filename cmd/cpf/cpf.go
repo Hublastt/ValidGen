@@ -98,3 +98,7 @@ func (CPFFunctions) FormatGeneratedCPF() (string, error) {
 	return (CPFFunctions{}).FormatCPF(cpf)
 
 }
+
+func Tes() {
+	fmt.Println("Test")
+}
